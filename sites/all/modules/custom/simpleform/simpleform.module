@@ -1,0 +1,84 @@
+<?php
+	function simpleform_menu(){
+		$items['simpleform'] = array(
+			'title' => "Simple Form",
+			'description' => "A Demo of a Simple Form",
+			'page callback' => "drupal_get_form",
+			'page arguments' => array('simpleform_page'),
+			'access callback' => TRUE,
+		);
+		return $items;
+	}
+	function simpleform_page($form,&$form_submit = NULL) {
+		$form['name'] = array(
+			'#title' => t("Name"),
+			'#type' => "textfield",
+			'#required' => TRUE,
+			'#description' => t("enter your name"),
+			);
+		$form['computer'] = array(
+				'#title' => t("Do you want a computer"),
+				'#type' => 'radios',
+				'#options' => array('yes' => t('Yes'),'no' => t('No')),
+				'#required' => TRUE
+			);
+		$form['computer_stats'] = array(
+				'#title' => 'Computer Specs',
+				'#type' => 'fieldset',
+				'#collapsible' => TRUE,
+				'#collapsed' => FALSE,
+				'#states' => array(
+						'visible' => array(
+							':input[name="computer"]' => array('value'=> 'yes')
+							)
+					)
+			);
+		$form['computer_stats']['thickness'] = array(
+				'#title' => t('Thickness'),
+				'#type' => 'textfield',
+				'#field_prefix' => t('Approx'),
+				'#field_suffix' => t('inches'),
+				'#maxlength' => 3,
+				'#size' => 3
+			);
+		$form['computer_stats']['color'] = array(
+				'#title' => t('Color'),
+				'#type' => 'select',
+				'#options' => array(
+						'blue' => t('blue'),
+						'white' => t('white'),
+						'black' => t('black')
+					)
+			);
+		$form['submit'] = array(
+			"#type" => "submit",
+			"#value" => "Submit"
+			);
+		$form['#submit'] = array('simpleform_page_submit');
+		$form['#redirect'] = 'node/1';
+		return $form;
+	}
+
+	function simpleform_page_validate($form,&$form_state) {
+
+		if($form_state['values']['name'] == 'santosh')
+		{
+			krumo($form);
+			krumo($form_state);
+			form_set_error("name","sorry your actual name is not santosh");
+		}
+	}
+
+	function simpleform_page_submit($form, &$form_state)	 {
+		drupal_set_message(t("hello"));
+		drupal_set_message(t("your name is @name",array('@name'=>$form_state['values']['name'])));
+	}
+	/*function simpleform_page_submit($form, &$form_state)	 {
+		error_log(print_r($form, TRUE));
+		krumo($form);
+		krumo($form_state);
+		exit(1);
+	}*/
+?>
+
+

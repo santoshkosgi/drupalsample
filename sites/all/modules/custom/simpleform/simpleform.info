@@ -1,0 +1,5 @@
+name = simpleform
+description = this is a demo module for a simple form
+core = 7.x
+versiom = 7.0 - alpha
+files[] = simple_form.module
