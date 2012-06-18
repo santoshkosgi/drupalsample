@@ -9,6 +9,7 @@
 		);
 		return $items;
 	}
+	$form['#tree'] = TRUE;
 	function simpleform_page($form,&$form_submit = NULL) {
 		$form['name'] = array(
 			'#title' => t("Name"),
@@ -29,7 +30,7 @@
 				'#collapsed' => FALSE,
 				'#states' => array(
 						'visible' => array(
-							':input[name="computer"]' => array('value'=> 'yes')
+							'[name="computer"]' => array('value'=> 'yes')
 							)
 					)
 			);
@@ -54,8 +55,13 @@
 			"#type" => "submit",
 			"#value" => "Submit"
 			);
-		$form['#submit'] = array('simpleform_page_submit');
-		$form['#redirect'] = 'node/1';
+		$form['submit1'] = array(
+			"#type" => "submit",
+			"#value" => "Submit1",
+			"#submit" => array('submit1'),
+			"#validate" => array("validate1")
+			);
+
 		return $form;
 	}
 
@@ -72,6 +78,7 @@
 	function simpleform_page_submit($form, &$form_state)	 {
 		drupal_set_message(t("hello"));
 		drupal_set_message(t("your name is @name",array('@name'=>$form_state['values']['name'])));
+		$form_state["redirect"] = 'admin/dashboard';
 	}
 	/*function simpleform_page_submit($form, &$form_state)	 {
 		error_log(print_r($form, TRUE));
@@ -79,6 +86,17 @@
 		krumo($form_state);
 		exit(1);
 	}*/
+	function validate1($form,&$form_state) {
+		if($form_state['values']['name'] == 'santosh')
+		{
+			krumo($form);
+			krumo($form_state);
+			form_set_error("name","sorry your actual name is not santosh submit1");
+		}
+	}
+	function submit1($form,&$form_state) {
+		dsm($form_state);
+		drupal_set_message(t("another button pressed"));
+		$form_state['redirect'] = '';
+	}
 ?>
-
-

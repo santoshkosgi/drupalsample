@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Add body classes if certain regions have content.
  */
@@ -109,6 +108,10 @@ function bartik_process_maintenance_page(&$variables) {
  * Override or insert variables into the node template.
  */
 function bartik_preprocess_node(&$variables) {
+//  drupal_add_js('http://ajax.googleapis.com/jsapi');
+//  drupal_add_js('http://ajax.googleapis.com/ajax/libs/googleapis/0.0.4/googleapis.min.js');
+//  drupal_add_js('http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js');
+  //drupal_add_js(path_to_theme() . '/js/gconnect.js');
   if ($variables['view_mode'] == 'full' && node_is_page($variables['node'])) {
     $variables['classes_array'][] = 'node-full';
   }

@@ -86,6 +86,8 @@
  */
 ?>
 <div id="page-wrapper"><div id="page">
+<!-- Insert the navbar element somewhere in the HTML page -->
+<div id="navbar"></div>
 
   <div id="header" class="<?php print $secondary_menu ? 'with-secondary-menu': 'without-secondary-menu'; ?>"><div class="section clearfix">
 
